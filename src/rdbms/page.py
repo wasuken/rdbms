@@ -1,37 +1,37 @@
-PAGE_SIZE = 8192  # 8KB
-HEADER_SIZE = 16
-SLOT_SIZE = 4
+from enum import Enum
 
 class Page:
-    page_id = 0
-    data = []
-    free_space_offset = 0
-    record_count = 0
-    page_type = 0
+    self.page_id: int = 0
+    self.data: bytearray = []
+    self.header: PageHeader = None
+    self.slot_array: SlotArray = None
 
-    def get_record():
+    def get_record(slot_id: int) -> bytes:
         raise NotImplementedError()
 
-    def insert_record():
+    def insert_record(record: bytes) -> int:
         raise NotImplementedError()
 
-    def delete_record():
+    def delete_record(slot_id: int) -> bytes:
         raise NotImplementedError()
 
-    def update_record():
+    def update_record(slot_id: int, record: bytes) -> bytes:
         raise NotImplementedError()
 
-    def check_free_space():
+    def get_free_space() -> int:
         raise NotImplementedError()
 
-    def set_deploypoint():
+    def serialise() -> bytes:
         raise NotImplementedError()
 
-    def update_slot():
+    def deserialise() -> bytes:
         raise NotImplementedError()
 
-    def write_record():
+    def compact_page():
         raise NotImplementedError()
 
-    def update_header():
+    def find_free_slot() -> int:
+        raise NotImplementedError()
+
+    def validate_slot_id(slot_id: int) -> boolean:
         raise NotImplementedError()

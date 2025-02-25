@@ -9,21 +9,26 @@ def test_slot_array_init():
     slot_array = SlotArray([Slot(100, 200, False)])
     assert len(slot_array.slots) == 1
 
+@pytest.mark.xfail(reason="未実装")
 def test_add_slot():
-    pass
+    assert False
 
+@pytest.mark.xfail(reason="未実装")
 def test_delete_slot():
-    pass
+    assert False
 
+@pytest.mark.xfail(reason="未実装")
 def test_update_slot():
-    pass
+    assert False
 
+@pytest.mark.xfail(reason="未実装")
 def test_get_slot():
-    pass
+    assert False
 
+@pytest.mark.xfail(reason="未実装")
 def test_serialize():
-    pass
+    assert False
 
-
+@pytest.mark.xfail(reason="未実装")
 def test_deserialize():
-    pass
+    assert False

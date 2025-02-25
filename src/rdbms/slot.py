@@ -10,6 +10,6 @@ class Slot:
         return struct.pack('>hh?', self.offset, self.length, self.is_active)
 
     @classmethod
-    def deserialize(self, data: bytes) -> 'Slot':
+    def deserialize(cls, data: bytes) -> 'Slot':
         offset, length, is_active = struct.unpack('>hh?', data)
-        return self(offset, length, is_active)
+        return cls(offset, length, is_active)

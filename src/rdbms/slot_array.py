@@ -5,27 +5,27 @@ class SlotArray:
     def __init__(self, slots: list['Slot'] = []):
         self.slots = slots
 
-
-    def get_slot(self, slot_id: int) -> 'Slot':
-        if slot_id < 0 >= len(self.slots):
+    def check_slot_id(self, slot_id: int):
+        if slot_id < 0 or slot_id >= len(self.slots):
             raise ValueError('Invalid slot_id: {slot_id}')
-        return self.slots[slot_id]
 
+    def get_slot(self, slot_id: int) -> Slot | None:
+        self.check_slot_id(slot_id)
+
+        return self.slots[slot_id]
 
     def add_slot(self, slot: 'Slot') -> int:
-        self.slots.append(slot)
         slot_id = len(self.slots)
+        self.slots.append(slot)
         return slot_id
 
-    def delete_list(self, slot_id: int):
-        if slot_id < 0 >= len(self.slots):
-            raise ValueError('Invalid slot_id: {slot_id}')
+    def delete_slot(self, slot_id: int):
+        self.check_slot_id(slot_id)
 
-        return self.slots[slot_id]
+        return self.slots.pop(slot_id)
 
     def update_slot(self, slot_id: int, offset: int, length, is_active: bool):
-        if slot_id < 0 >= len(self.slots):
-            raise ValueError('Invalid slot_id: {slot_id}')
+        self.check_slot_id(slot_id)
 
         t_slot = self.slots[slot_id]
         t_slot.offset = offset

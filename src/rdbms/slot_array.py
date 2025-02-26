@@ -2,7 +2,7 @@ import struct
 from rdbms.slot import Slot
 
 class SlotArray:
-    def __init__(self, slots: list['Slot'] = []):
+    def __init__(self, slots: list[Slot] = []):
         self.slots = slots
 
     def check_slot_id(self, slot_id: int):
@@ -14,7 +14,7 @@ class SlotArray:
 
         return self.slots[slot_id]
 
-    def add_slot(self, slot: 'Slot') -> int:
+    def add_slot(self, slot: Slot) -> int:
         slot_id = len(self.slots)
         self.slots.append(slot)
         return slot_id
@@ -24,7 +24,7 @@ class SlotArray:
 
         return self.slots.pop(slot_id)
 
-    def update_slot(self, slot_id: int, offset: int, length, is_active: bool):
+    def update_slot(self, slot_id: int, offset: int, length: int, is_active: bool):
         self.check_slot_id(slot_id)
 
         t_slot = self.slots[slot_id]
@@ -41,15 +41,15 @@ class SlotArray:
         return header + serial
 
     @classmethod
-    def deserialize(cls, data: bytes) -> list['Slot']:
+    def deserialize(cls, data: bytes) -> 'SlotArray':
         slot_count = struct.unpack('>i', data[:4])[0]
-        slot_array = cls()
         slot_size = 5
+        slots = []
 
         for i in range(slot_count):
             start = 4 + (i * slot_size)
             end = start + slot_size
-            slot_array.add_slot(Slot.deserialize(data[start:end]))
+            slots.append(Slot.deserialize(data[start:end]))
 
-        return slot_array
+        return cls(slots)
 

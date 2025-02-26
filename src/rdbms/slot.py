@@ -1,4 +1,5 @@
 import struct
+
 class Slot:
 
     def __init__(self, offset: int = 0, length: int = 0, is_active: bool = True):

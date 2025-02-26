@@ -1,3 +1,4 @@
+import struct
 import pytest
 from rdbms.slot_array import SlotArray
 from rdbms.slot import Slot
@@ -29,14 +30,21 @@ def test_delete_slot():
     target = slot_array.get_slot(0)
     assert(target.serialize() == Slot(100, 300, False).serialize())
 
-@pytest.mark.xfail(reason="未実装")
 def test_update_slot():
-    assert False
+    slot_array = SlotArray([Slot(100, 200, False), Slot(100, 300, False)])
+    slot_array.update_slot(0, 300, 400, True)
+    target = slot_array.get_slot(0)
+    assert(target.serialize() == Slot(300, 400, True).serialize())
 
-@pytest.mark.xfail(reason="未実装")
 def test_serialize():
-    assert False
+    target = SlotArray([Slot(100, 200, False), Slot(100, 300, True)])
+    expected = b'' + struct.pack('>i', 2) \
+        + Slot(100, 200, False).serialize() \
+        + Slot(100, 300, True).serialize()
+    assert(target.serialize() == expected)
 
-@pytest.mark.xfail(reason="未実装")
 def test_deserialize():
-    assert False
+    origin = SlotArray([Slot(100, 200, False), Slot(100, 300, True)])
+    assert(origin.serialize() == SlotArray.deserialize(origin.serialize()).serialize())
+    assert(origin.serialize() == SlotArray.deserialize(SlotArray.deserialize(origin.serialize()).serialize()).serialize())
+

@@ -1,9 +1,17 @@
 import struct
 from rdbms.slot import Slot
+from rdbms.types import SLOT_ENTRY_SIZE, SLOT_HEADER_SIZE
 
 class SlotArray:
     def __init__(self, slots: list[Slot] = []):
         self.slots = slots
+
+    def find_free_slot(self) -> int:
+        for i, slot in enumerate(self.slots):
+            if not slot.is_active:
+                return i
+
+        self.add_slot(Slot())
 
     def check_slot_id(self, slot_id: int):
         if slot_id < 0 or slot_id >= len(self.slots):
@@ -31,6 +39,10 @@ class SlotArray:
         t_slot.offset = offset
         t_slot.length = length
         t_slot.is_active = is_active
+
+
+    def get_slot_array_size(self):
+        return SLOT_HEADER_SIZE + (len(self.slots) * SLOT_ENTRY_SIZE)
 
     def serialize(self):
         header = struct.pack('>i', len(self.slots))

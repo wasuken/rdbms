@@ -10,6 +10,11 @@ def test_slot_array_init():
     slot_array = SlotArray([Slot(100, 200, False)])
     assert len(slot_array.slots) == 1
 
+
+def test_find_free_slot():
+    slot_array = SlotArray([Slot(100, 200, True), Slot(500, 200, False), Slot(100, 200, False)])
+    assert(slot_array.find_free_slot() != None)
+
 def test_get_slot():
     slot_array = SlotArray([Slot(100, 200, False)])
     assert(slot_array.get_slot(0) != None)
@@ -29,6 +34,10 @@ def test_delete_slot():
     slot_array.delete_slot(0)
     target = slot_array.get_slot(0)
     assert(target.serialize() == Slot(100, 300, False).serialize())
+
+def test_get_slot_array_size():
+    slot_array = SlotArray([Slot(100, 200, False), Slot(100, 300, False)])
+    assert slot_array.get_slot_array_size() == 14
 
 def test_update_slot():
     slot_array = SlotArray([Slot(100, 200, False), Slot(100, 300, False)])

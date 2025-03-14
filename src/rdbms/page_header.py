@@ -1,5 +1,5 @@
 import  struct
-from rdbms.types import PageType, PAGE_SIZE
+from rdbms.types import PageType, PAGE_SIZE, PAGE_HEADER_ENTRY_SIZE
 
 class PageHeader:
     def __init__(self, page_id: int = 0, free_space_offset: int = -1, record_count: int = 0, page_type: PageType = PageType.DATA_PAGE, next_free_page: int = 0):
@@ -20,7 +20,6 @@ class PageHeader:
                    record_count,
                    PageType(page_type),
                    next_free_page)
-
 
     def update_free_space(self, offset: int):
         if 0 <= offset < PAGE_SIZE:

@@ -3,7 +3,7 @@ from rdbms.page import Page
 from rdbms.slot_array import SlotArray
 from rdbms.slot import Slot
 from rdbms.page_header import PageHeader
-from rdbms.types import PageType
+from rdbms.types import PageType, PAGE_SIZE, SLOT_ARRAY_HEADER_SIZE, PAGE_HEADER_ENTRY_SIZE
 
 def test_page_header_init():
     ph = PageHeader()
@@ -26,4 +26,4 @@ def test_page_header_init():
 
 def test_get_free_space():
     p = Page()
-    p.get_free_space() == 0
+    assert p.get_free_space() == (PAGE_SIZE - PAGE_HEADER_ENTRY_SIZE - SLOT_ARRAY_HEADER_SIZE)

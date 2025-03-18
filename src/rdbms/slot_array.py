@@ -1,6 +1,6 @@
 import struct
 from rdbms.slot import Slot
-from rdbms.types import SLOT_ENTRY_SIZE, SLOT_HEADER_SIZE
+from rdbms.types import SLOT_ENTRY_SIZE, SLOT_ARRAY_HEADER_SIZE
 
 class SlotArray:
     def __init__(self, slots: list[Slot] = []):
@@ -42,7 +42,7 @@ class SlotArray:
 
 
     def get_slot_array_size(self):
-        return SLOT_HEADER_SIZE + (len(self.slots) * SLOT_ENTRY_SIZE)
+        return SLOT_ARRAY_HEADER_SIZE + (len(self.slots) * SLOT_ENTRY_SIZE)
 
     def serialize(self):
         header = struct.pack('>i', len(self.slots))
